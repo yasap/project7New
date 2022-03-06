@@ -1,29 +1,12 @@
 const express = require("express");
-const mysql = require("mysql");
+
 const bodyParser = require("body-parser");
 
-// create connection
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'groupmania'
-});
-
-// connect
-db.connect(() => {
-  if (error) {
-    throw err;
-  }
-  console.log("MySql connected")
-});
 
 
 const path = require('path');
 const cors = require('cors')
 const app = express();
-
-// create DB
-app.get("/createdb, (req, res")
 
 
 app.use((req, res, next) => {
