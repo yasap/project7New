@@ -8,12 +8,12 @@ const db = mysql2.createConnection({
   password: 'Studiare21'
 });
 
-// connect
-db.connect(() => {
-  if (error) {
-    throw err;
-  }
-  console.log("MySQL connected")
-});
+//query 
 
-module.exports = con ;
+db.on("error", (error) => {
+  console.log(" can not connect" , error);
+
+});
+console.log("successfully connected");
+
+module.exports = db ;

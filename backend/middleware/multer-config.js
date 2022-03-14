@@ -1,23 +1,23 @@
-// const multer = require('multer');
+const multer = require('multer');
 
 
 
-// const storage = multer.diskStorage({
+const storage = multer.diskStorage({
     
-//     destination: (req, file, callback) => {
-//         callback(null, 'images/');
+    destination: (req, file, callback) => {
+        callback(null, 'images/');
         
-//     },
-//     filename: (req, file, callback) => {
+    },
+    filename: (req, file, callback) => {
        
-//     callback(null,  Date.now() +file.originalname );
+    callback(null,  Date.now() +file.originalname );
     
 
    
 
       
-//     }
-// });
+    }
+});
 
 
-// module.exports = multer({storage: storage}).single('image');
+module.exports = multer({storage: storage}).single('image');
