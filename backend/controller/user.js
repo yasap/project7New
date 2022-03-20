@@ -1,39 +1,25 @@
 const bcrypt = require('bcrypt');
 const userFunc = require("../model/user");
-const con = require("./database");
+const con = require("../database");
 const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res, next) => {
   //get the data from frontend
-  const userEmail = req.body.userEmail;
-  const password = req.body.password;
-  const fullName = req.body.firstName + " " + req.body.lastName;
-    
-  bcrypt.hash(req.body.password, 10).then(
-    (hash) => {
-      con.connect()
-
-    }).catch((e) => {
-    
-    });
-  let hashedPassword = "";
-}
+  const userEmail = req.body.userEmail
+  const password = req.body.password
+  const firstName = req.body.firstName
+  const lastName = req.body.lastName
+  let hashedPassword = ""
   //hash password
   
-
-  exports.login = (req, res, next) => {
-    const userEmail = req.body.userEmail;
-    const password = req.body.password;
-    const fullName = req.body.firstName + " " + req.body.lastName;
-  }
 
   //check the email
 
   con.query(
-    "SELECT userEmail FROM userDB WHERE userEmail  = '" + userEmail + "'",
+    "SELECT email FROM users WHERE email  = '" + userEmail + "'",
     (err, results) => {
       if (err) {
-        console.log(err);
+        console.log("this is my error");
       }
       if (results.length != 0) {
         res.status(403).json({
@@ -65,54 +51,55 @@ exports.signup = (req, res, next) => {
           }
         });
       }
-    });
-
-exports.login = (req, res, fields) => {
-  const userEmail = req.body.userEmail;
-  const password = req.body.password;
-
-  con.query(
-    'SELECT * FROM userDB WHERE userEmail = ?', [userEmail],
-    (err, results) => {
-      if (err) {
-        
-        res.status(500).json({ 'message': "User Email not found" })
-      }
-       if (results.length>0) {
-        bcrypt.compare(password, results[0].userPassword).then(
-          (valid) => {
-            if (!valid) {
-              return res.status(401).json({
-                error: new Error('Incorrect password!')
-              });
-            }
-            const token = jwt.sign(
-              { userID: results[0].userID },
-              'Lorem_ipsum_dolor_sit_amet',
-              { expiresIn: '24h' }
-            );
-
-            res.status(200).json({
-              userID: results[0].userID,
-              token: token,
-              firstName: results[0].firstName,
-              lastName: results[0].lastName
-            });
-          }
-        )
-          .catch(
-            (error) => {
-              res.status(500).json({
-                error: error
-              })
-            }
-          );
-      }
-      else{
-        res.status(500).json({'message' : "User Email not found"})
-      }
     })
-}
+};
+
+// exports.login = (req, res, fields) => {
+//   const userEmail = req.body.userEmail;
+//   const password = req.body.password;
+
+//   con.query(
+//     'SELECT * FROM userDB WHERE userEmail = ?', [userEmail],
+//     (err, results) => {
+//       if (err) {
+        
+//         res.status(500).json({ 'message': "User Email not found" })
+//       }
+//        if (results.length>0) {
+//         bcrypt.compare(password, results[0].userPassword).then(
+//           (valid) => {
+//             if (!valid) {
+//               return res.status(401).json({
+//                 error: new Error('Incorrect password!')
+//               });
+//             }
+//             const token = jwt.sign(
+//               { userID: results[0].userID },
+//               'Lorem_ipsum_dolor_sit_amet',
+//               { expiresIn: '24h' }
+//             );
+
+//             res.status(200).json({
+//               userID: results[0].userID,
+//               token: token,
+//               firstName: results[0].firstName,
+//               lastName: results[0].lastName
+//             });
+//           }
+//         )
+//           .catch(
+//             (error) => {
+//               res.status(500).json({
+//                 error: error
+//               })
+//             }
+//           );
+//       }
+//       else{
+//         res.status(500).json({'message' : "User Email not found"})
+//       }
+//     })
+// }
 
 // exports.updateUser=(req,res,next)=>{
 // const userID =res.body.userID;

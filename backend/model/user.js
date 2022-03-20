@@ -1,13 +1,14 @@
 const bcrypt = require('bcrypt');
-const con = require('../database')
+const con = require('../database');
 
 
 exports.createUser = function (firstName,lastName,userEmail,password){
     return new Promise((resolve,reject)=>{
-       con.query(`INSERT INTO userDB(  firstName, lastName, userEmail,userPassword)
-       VALUES('${firstName}', '${lastName}', '${userEmail}','${password}')` ,
+       con.query(`INSERT INTO users(  firstName, email, password, lastName)
+       VALUES('${firstName}', '${userEmail}','${password}', '${lastName}')` ,
         (error, results) => {
-            if (error) {
+          if (error) {
+            console.log("HI");
               reject (error)
             }
             resolve(results)
@@ -15,32 +16,32 @@ exports.createUser = function (firstName,lastName,userEmail,password){
           })
     })    
 }
-exports.editUser = function (firstName,lastName,userEmail,password,userID){
-  return new Promise((resolve,reject)=>{
-    con.query("UPDATE userDB SET firstName=?,lastName=?, userEmail= ?, userPassword= ? WHERE userID = ?",
-    [firstName,lastName,userEmail,password,userID],
-    (error, results) => {
-      if (error) {
-        reject (error)
-      }
-      resolve(results)
+// exports.editUser = function (firstName,lastName,userEmail,password,userID){
+//   return new Promise((resolve,reject)=>{
+//     con.query("UPDATE users SET firstName=?,lastName=?, email= ?, password= ? WHERE userID = ?",
+//     [firstName,lastName,userEmail,password,userID],
+//     (error, results) => {
+//       if (error) {
+//         reject (error)
+//       }
+//       resolve(results)
     
-    }
-    )
-  })
-}
+//     }
+//     )
+//   })
+// }
 
-exports.removeUser = function (userID){
-  return new Promise((resolve,reject)=>{
-    con.query("DELETE FROM userDB WHERE userID=?;",
-    [userID],
-    (error, results) => {
-      if (error) {
-        reject (error)
-      }
-      resolve(results)
+// exports.removeUser = function (userID){
+//   return new Promise((resolve,reject)=>{
+//     con.query("DELETE FROM users WHERE id=?;",
+//     [userID],
+//     (error, results) => {
+//       if (error) {
+//         reject (error)
+//       }
+//       resolve(results)
     
-    }
-    )
-  })
-}
+//     }
+//     )
+//   })
+// }
