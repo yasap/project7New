@@ -19,7 +19,10 @@ exports.signup = (req, res, next) => {
     "SELECT email FROM users WHERE email  = '" + userEmail + "'",
     (err, results) => {
       if (err) {
-        console.log("this is my error");
+        console.log("this is my error:", err);
+        res.status(500).json({
+          message: err
+        })
       }
       if (results.length != 0) {
         res.status(403).json({
@@ -54,52 +57,51 @@ exports.signup = (req, res, next) => {
     })
 };
 
-// exports.login = (req, res, fields) => {
-//   const userEmail = req.body.userEmail;
-//   const password = req.body.password;
+exports.login = (req, res, fields) => {
+  const userEmail = req.body.userEmail;
+  const password = req.body.password;
 
-//   con.query(
-//     'SELECT * FROM userDB WHERE userEmail = ?', [userEmail],
-//     (err, results) => {
-//       if (err) {
-        
-//         res.status(500).json({ 'message': "User Email not found" })
-//       }
-//        if (results.length>0) {
-//         bcrypt.compare(password, results[0].userPassword).then(
-//           (valid) => {
-//             if (!valid) {
-//               return res.status(401).json({
-//                 error: new Error('Incorrect password!')
-//               });
-//             }
-//             const token = jwt.sign(
-//               { userID: results[0].userID },
-//               'Lorem_ipsum_dolor_sit_amet',
-//               { expiresIn: '24h' }
-//             );
+  con.query(
+    'SELECT * FROM users WHERE email = ?', [userEmail],
+    (err, results) => {
+      if (err) {
+        res.status(500).json({ 'message': "User Email not found" })
+      }
+       if (results.length>0) {
+        bcrypt.compare(password, results[0].userPassword).then(
+          (valid) => {
+            if (!valid) {
+              return res.status(401).json({
+                error: new Error('Incorrect password!')
+              });
+            }
+            const token = jwt.sign(
+              { userID: results[0].userID },
+              'Lorem_ipsum_dolor_sit_amet',
+              { expiresIn: '24h' }
+            );
 
-//             res.status(200).json({
-//               userID: results[0].userID,
-//               token: token,
-//               firstName: results[0].firstName,
-//               lastName: results[0].lastName
-//             });
-//           }
-//         )
-//           .catch(
-//             (error) => {
-//               res.status(500).json({
-//                 error: error
-//               })
-//             }
-//           );
-//       }
-//       else{
-//         res.status(500).json({'message' : "User Email not found"})
-//       }
-//     })
-// }
+            res.status(200).json({
+              userID: results[0].userID,
+              token: token,
+              firstName: results[0].firstName,
+              lastName: results[0].lastName
+            });
+          }
+        )
+          .catch(
+            (error) => {
+              res.status(500).json({
+                error: error
+              })
+            }
+          );
+      }
+      else{
+        res.status(500).json({'message' : "User Email not found"})
+      }
+    })
+}
 
 // exports.updateUser=(req,res,next)=>{
 // const userID =res.body.userID;
