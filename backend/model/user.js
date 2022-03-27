@@ -3,12 +3,13 @@ const con = require('../database');
 
 
 exports.createUser = function (firstName,lastName,userEmail,password){
-    return new Promise((resolve,reject)=>{
+  return new Promise((resolve, reject) => {
+      console.log("HI");
        con.query(`INSERT INTO users(  firstName, email, password, lastName)
        VALUES('${firstName}', '${userEmail}','${password}', '${lastName}')` ,
         (error, results) => {
           if (error) {
-            console.log("HI");
+            
               reject (error)
             }
             resolve(results)

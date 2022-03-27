@@ -1,33 +1,33 @@
-// const post = require("../module/post");
-// const con = require("../database");
-// var fs = require('fs');
+const post = require("../model/post");
+const con = require("../database");
+var fs = require('fs');
 
-// exports.addPost = (req, res, next) => {
+exports.addPost = (req, res, next) => {
 
-//   //get the data from frontend
-//   const userID = req.body.userID
-//   const message = req.body.message
-//   var s2 = undefined;
-//   if(req.file && req.file.path) {
-//      s2 = req.file.path.substring(7);
-//   }
-//  const image = s2
-//   //console.log(userID,message,image);
-//   post.createPost(userID, message, image)
-//     .then(
-//       () => {
-//         res.status(201).json({
-//           message: 'New post added to database successfully!'
-//         });
-//       }
-//     ).catch(
-//       (error) => {
-//         res.status(500).json({
-//           error: error
-//         });
-//       }
-//     );
-// }
+  //get the data from frontend
+  const userID = req.body.userID
+  const message = req.body.message
+  var s2 = undefined;
+  if(req.file && req.file.path) {
+     s2 = req.file.path.substring(7);
+  }
+ const image = s2
+  //console.log(userID,message,image);
+  post.createPost(userID, message, image)
+    .then(
+      () => {
+        res.status(201).json({
+          message: 'New post added to database successfully!'
+        });
+      }
+    ).catch(
+      (error) => {
+        res.status(500).json({
+          error: error
+        });
+      }
+    );
+}
 // //get data from db
 // exports.getPost = (req, res, next) => {
 //   con.query("SELECT * FROM postDB ",

@@ -1,20 +1,20 @@
-// const con = require("../controller/database");
+const con = require("../database");
 
-// exports.createPost = function (userID,message,image){
-//     return new Promise((resolve,reject)=>{
+exports.createPost = function (userID,message,image){
+    return new Promise((resolve,reject)=>{
         
-//         con.query(
-//             `INSERT INTO postDB(userID,message, image)
-//         VALUES('${userID}','${message}', '${image}')`, 
-//         (error, results) => {
-//             if (error) {
-//                 reject (error)
-//               }
-//               resolve(results)
-//               console.log(results);
-//         })
-//     });
-// }
+        con.query(
+            `INSERT INTO post(author,content,image)
+        VALUES('${userID}','${message}', '${image}')`, 
+        (error, results) => {
+            if (error) {
+                reject (error)
+              }
+              resolve(results)
+              console.log(results);
+        })
+    });
+}
 
 // exports.addRead = function (userID,postID){
 //     return new Promise((resolve,reject)=>{

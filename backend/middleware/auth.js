@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-model.exports = (req, res, next) => {
+module.exports = (req, res, next) => {
   try {
     const token = req.headers.token;
     const decodedToken = jwt.verify(token, 'Lorem_ipsum_dolor_sit_amet');
