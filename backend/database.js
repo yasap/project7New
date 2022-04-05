@@ -14,6 +14,6 @@ db.on("error", (error) => {
   console.log(" can not connect" , error);
 
 });
-console.log("successfully connected");
+// console.log("successfully connected");
 
 module.exports = db ;

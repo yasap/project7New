@@ -4,9 +4,8 @@ const con = require('../database');
 
 exports.createUser = function (firstName,lastName,userEmail,password){
   return new Promise((resolve, reject) => {
-      console.log("HI");
-       con.query(`INSERT INTO users(  firstName, email, password, lastName)
-       VALUES('${firstName}', '${userEmail}','${password}', '${lastName}')` ,
+      console.log("email check 2", userEmail);
+    con.query("INSERT INTO users(firstName, email, password, lastName) VALUES (?,?,?,?)", [firstName, userEmail, password, lastName],
         (error, results) => {
           if (error) {
             

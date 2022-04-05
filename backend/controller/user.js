@@ -5,18 +5,19 @@ const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res, next) => {
   //get the data from frontend
-  const userEmail = req.body.userEmail
-  const password = req.body.password
-  const firstName = req.body.firstName
-  const lastName = req.body.lastName
-  let hashedPassword = ""
+  const userEmail = req.body.userEmail;
+  const password = req.body.password;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  let hashedPassword = "";
+  console.log("email check", userEmail);
   //hash password
   
 
   //check the email
 
   con.query(
-    "SELECT email FROM users WHERE email  = '" + userEmail + "'",
+    "SELECT email FROM users WHERE email  =?", [userEmail],
     (err, results) => {
       if (err) {
         console.log("this is my error:", err);
@@ -33,7 +34,7 @@ exports.signup = (req, res, next) => {
       else {
         bcrypt.hash(password, 10, (err, result) => {
           if (err) {
-            return res.status(500).json({ "Error": err })
+           res.status(500).json({ "Error": err })
           }
           else {
            
@@ -65,24 +66,25 @@ exports.login = (req, res, fields) => {
     'SELECT * FROM users WHERE email = ?', [userEmail],
     (err, results) => {
       if (err) {
-        res.status(500).json({ 'message': "User Email not found" })
+        res.status(500).json({ 'message': "Ooops" })
       }
-       if (results.length>0) {
-        bcrypt.compare(password, results[0].userPassword).then(
+      if (results.length > 0) {
+        console.log(" check3" , results);
+        bcrypt.compare(password, results[0].password).then(
           (valid) => {
             if (!valid) {
-              return res.status(401).json({
-                error: new Error('Incorrect password!')
+               res.status(401).json({
+                 error: 'Incorrect password!'
               });
             }
             const token = jwt.sign(
-              { userID: results[0].userID },
+              { userID: results[0].id },
               'Lorem_ipsum_dolor_sit_amet',
               { expiresIn: '24h' }
             );
 
             res.status(200).json({
-              userID: results[0].userID,
+              userID: results[0].id,
               token: token,
               firstName: results[0].firstName,
               lastName: results[0].lastName
