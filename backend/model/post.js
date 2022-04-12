@@ -17,17 +17,17 @@ exports.createPost = function (userID,title,message,image){
     });
 }
 
-// exports.addRead = function (userID,postID){
-//     return new Promise((resolve,reject)=>{
-//         console.log(userID, postID);
-//         con.query(
-//             `INSERT INTO readPost (postID,userID) VALUES ('${postID}','${userID}')`, 
-//         (error, results) => {
-//             if (error) {
-//                 reject (error)
-//               }
-//               resolve(results)
-//               console.log(results);
-//         })
-//     });
-// }
+exports.addRead = function (userID,postID){
+    return new Promise((resolve,reject)=>{
+        console.log(userID, postID);
+        con.query(
+            `INSERT INTO readPost (postID,userID) VALUES ('${postID}','${userID}')`, 
+        (error, results) => {
+            if (error) {
+                reject (error)
+              }
+              resolve(results)
+              console.log(results);
+        })
+    });
+}

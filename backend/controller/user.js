@@ -105,115 +105,115 @@ exports.login = (req, res, fields) => {
     })
 }
 
-// exports.updateUser=(req,res,next)=>{
-// const userID =res.body.userID;
-// const userEmail =res.body.userEmail;
-// const password =res.body.password;
-// console.log(userID,userEmail,password);
-// con.query(
-//   "SELECT userEmail FROM userDB WHERE userID = '" + userId + "'",
-//   (err, results) => {
-//     if (err) {
-//       console.log(err);
-//     }
-//     if (results.length === 0) {
-//       res.status(404).json({ 'message': "User Email not found" })
-//     }else{
-//       bcrypt.hash(password, 10, (err, result) => {
-//         if (err) {
-//           return res.status(500).json({ "Error": err })
-//         }
-//         else {
-//           hashedPassword = result;
-//           console.log(hashedPassword);
-//           userFunc.editUser( userEmail, hashedPassword,userID)
-//             .then(
-//               () => {
-//                 res.status(201).json({
-//                   message: 'User added successfully!'
-//                 });
-//               }
-//             ).catch(
-//               (error) => {
-//                 res.status(500).json({
-//                   error: error
-//                 });
-//               });
-//         }
-//       });
-//     }
-//        })
-// }
+exports.updateUser=(req,res,next)=>{
+const userID =res.body.userID;
+const userEmail =res.body.userEmail;
+const password =res.body.password;
+console.log(userID,userEmail,password);
+con.query(
+  "SELECT userEmail FROM userDB WHERE userID = '" + userId + "'",
+  (err, results) => {
+    if (err) {
+      console.log(err);
+    }
+    if (results.length === 0) {
+      res.status(404).json({ 'message': "User Email not found" })
+    }else{
+      bcrypt.hash(password, 10, (err, result) => {
+        if (err) {
+          return res.status(500).json({ "Error": err })
+        }
+        else {
+          hashedPassword = result;
+          console.log(hashedPassword);
+          userFunc.editUser( userEmail, hashedPassword,userID)
+            .then(
+              () => {
+                res.status(201).json({
+                  message: 'User added successfully!'
+                });
+              }
+            ).catch(
+              (error) => {
+                res.status(500).json({
+                  error: error
+                });
+              });
+        }
+      });
+    }
+       })
+}
 
-// exports.updateUser=(req,res,next)=>{
-//    const userID =req.body.userID
-//    const firstName = req.body.firstName
-//   const lastName = req.body.lastName
-//    const userEmail=req.body.userEmail
-//    const password=req.body.password
-//    con.query(
-//     "SELECT userEmail FROM userDB WHERE userID = '" + userID + "'",
-//     (err, results) => {
-//       if (err) {
-//         console.log(err);
-//       }
-//       if (results.length === 0) {
-//         res.status(404).json({ 'message': "User not found" })
-//       }else{
-//         {
-//           bcrypt.hash(password, 10, (err, result) => {
-//             if (err) {
-//               return res.status(500).json({ "Error": err })
-//             }
-//             else {
-//               console.log(result);
-//               hashedPassword = result;
+exports.updateUser=(req,res,next)=>{
+   const userID =req.body.userID
+   const firstName = req.body.firstName
+  const lastName = req.body.lastName
+   const userEmail=req.body.userEmail
+   const password=req.body.password
+   con.query(
+    "SELECT userEmail FROM userDB WHERE userID = '" + userID + "'",
+    (err, results) => {
+      if (err) {
+        console.log(err);
+      }
+      if (results.length === 0) {
+        res.status(404).json({ 'message': "User not found" })
+      }else{
+        {
+          bcrypt.hash(password, 10, (err, result) => {
+            if (err) {
+              return res.status(500).json({ "Error": err })
+            }
+            else {
+              console.log(result);
+              hashedPassword = result;
              
-//               userFunc.editUser( firstName,lastName,userEmail,hashedPassword,userID)
-//                 .then(
-//                   () => {
-//                     res.status(201).json({
-//                       message: 'User update successfully!'
-//                     });
-//                   }
-//                 ).catch(
-//                   (error) => {
-//                     res.status(500).json({
-//                       error: error
-//                     });
-//                   });
-//             }
-//           });
-//         }
+              userFunc.editUser( firstName,lastName,userEmail,hashedPassword,userID)
+                .then(
+                  () => {
+                    res.status(201).json({
+                      message: 'User update successfully!'
+                    });
+                  }
+                ).catch(
+                  (error) => {
+                    res.status(500).json({
+                      error: error
+                    });
+                  });
+            }
+          });
+        }
         
-//       }
-//     }
-//     )
-// }
-// exports.deleteUser=(req,res,next)=>{
-//   const userID =req.params.id
-//   con.query(
-//     "SELECT userEmail FROM userDB WHERE userID = '" + userID + "'",
-//     (err, results) => {
-//       if (err) {
-//         console.log(err);
-//       }if (results.length === 0) {
-//         res.status(404).json({ 'message': "User not found" })
-//       }else{
-//         userFunc.removeUser(userID)
-//         .then(
-//           () => {
-//             res.status(201).json({
-//               message: 'User delete successfully!'
-//             });
-//           }
-//         ).catch(
-//           (error) => {
-//             res.status(500).json({
-//               error: error
-//             });
-//           });
-//       }
-//     }
-//   )
-// }
+      }
+    }
+    )
+}
+exports.deleteUser=(req,res,next)=>{
+  const userID =req.params.id
+  con.query(
+    "SELECT userEmail FROM userDB WHERE userID = '" + userID + "'",
+    (err, results) => {
+      if (err) {
+        console.log(err);
+      }if (results.length === 0) {
+        res.status(404).json({ 'message': "User not found" })
+      }else{
+        userFunc.removeUser(userID)
+        .then(
+          () => {
+            res.status(201).json({
+              message: 'User delete successfully!'
+            });
+          }
+        ).catch(
+          (error) => {
+            res.status(500).json({
+              error: error
+            });
+          });
+      }
+    }
+  )
+}
