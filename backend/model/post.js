@@ -17,11 +17,11 @@ exports.createPost = function (userID,title,message,image){
     });
 }
 
-exports.addRead = function (userID,postID){
+exports.getSinglePost= function (postID){
     return new Promise((resolve,reject)=>{
         console.log(userID, postID);
         con.query(
-            `INSERT INTO readPost (postID,userID) VALUES ('${postID}','${userID}')`, 
+            "SELECT *  FROM post WHERE post_id = ?", [postID] ,
         (error, results) => {
             if (error) {
                 reject (error)

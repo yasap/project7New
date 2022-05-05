@@ -30,32 +30,49 @@ if (req.file) {
     ).catch(
       (error) => {
         res.status(500).json({
-          error: error
+          message: "error occurred"
         });
       }
     );
 }
 // //get data from db
-exports.getPost = (req, res, next) => {
-  con.query("SELECT * FROM post ",
+exports.getAllPost = (req, res, next) => {
+  con.query("SELECT * FROM post order by date_created desc",
     (error, results) => {
       if (error) {
-        throw error
+        res.status(200).json({
+          message: "something went wrong"
+        });
+        
       }
-      res.status(200).json(results)
-      console.log('hi');
+      else res.status(200).json(results);
     })
-}
+};
+// exports.getOnePost = (req, res, next) => {
+//   post.findOne({
+//     _id: req.params.id
+//     .then(
+//     (post) => {
+//       (error, results) => {
+//         if (error) {
+//           res.status(200).json({
+//             message: "oops... Something went wrong"
+//           });
+        
+//         }
+//         else res.status(200).json(results);
+//       }
+//     });
 
 // // post-read 
-exports.readPost = (req, res, next) => {
+exports.getPost = (req, res, next) => {
   console.log(req.body.userID, req.body.post);
   const userID = req.body.userID;
   const postID = req.body.postID;
-  post.addRead(userID, postID)
+  post.getSinglePost(postID)
     .then(
       () => {
-        console.log(userID, postID);
+        console.log(postID);
         res.status(201).json({
           message: 'Read post added successfully!'
         });

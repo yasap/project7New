@@ -15,18 +15,5 @@ module.exports = (req, res, next) => {
       }
     });
     
-    if (req.headers.userID !== userID) {
-      throw 'Invalid user ID';
-    } else {
-      next();
-    
-    }
-      //  else {
-
-      // res.status(403).json({
-      //   error: new Error('Invalid request!')
-      // });
-      
-    // }
   }
 }
