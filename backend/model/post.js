@@ -19,14 +19,15 @@ exports.createPost = function (userID,title,message,image){
 
 exports.getSinglePost= function (postID){
     return new Promise((resolve,reject)=>{
-        console.log(userID, postID);
+        console.log(postID);
         con.query(
-            "SELECT *  FROM post WHERE post_id = ?", [postID] ,
+            // "SELECT *  FROM post WHERE post_id = ?", [postID] ,
+            "SELECT p.*,u.firstname,u.lastname FROM post p INNER JOIN users u on p.author=u.id WHERE p.post_id = ?", [postID],
         (error, results) => {
             if (error) {
-                reject (error)
+                reject ("OOPS, something went wrong: can't open this post")
               }
-              resolve(results)
+              resolve(results[0])
               console.log(results);
         })
     });

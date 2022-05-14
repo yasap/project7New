@@ -66,25 +66,25 @@ exports.getAllPost = (req, res, next) => {
 
 // // post-read 
 exports.getPost = (req, res, next) => {
-  console.log(req.body.userID, req.body.post);
-  const userID = req.body.userID;
-  const postID = req.body.postID;
+  const postID = req.params.id;
   post.getSinglePost(postID)
-    .then(
-      () => {
-        console.log(postID);
-        res.status(201).json({
-          message: 'Read post added successfully!'
-        });
+    .then((result) => {
+      if (result) {
+        res.status(200).json(result);
       }
-    ).catch(
+      else {
+        res.status(200).json({ message: "No records found" });
+      }
+    })
+  .catch(
       (error) => {
         res.status(500).json({
-          error: error
+          message: error.message,
         });
-      });
-
+      }
+    );
 }
+ 
 exports.getReadPost = (req, res, next) => {
   const userID = req.params.id
   con.query('SELECT * FROM readPost WHERE userID =' + userID,

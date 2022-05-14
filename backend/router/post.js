@@ -9,7 +9,7 @@ const postCtrl = require('../controller/post');
 
 router.get('/',auth,postCtrl.getAllPost);
 router.post('/addPost',auth,multermid, postCtrl.addPost);
-router.get('/:id', postCtrl.getPost);
+router.get('/:id/', postCtrl.getPost);
 
 
 module.exports = router;

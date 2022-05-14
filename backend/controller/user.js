@@ -73,22 +73,25 @@ exports.login = (req, res, fields) => {
         bcrypt.compare(password, results[0].password).then(
           (valid) => {
             if (!valid) {
-               res.status(401).json({
-                 error: 'Incorrect password!'
+              res.status(401).json({
+                error: 'Incorrect password!'
               });
             }
+            else{
             const token = jwt.sign(
               { userID: results[0].id },
               'Lorem_ipsum_dolor_sit_amet',
               { expiresIn: '24h' }
             );
 
-            res.status(200).json({
-              userID: results[0].id,
-              token: token,
-              firstName: results[0].firstName,
-              lastName: results[0].lastName
-            });
+           res.status(200).json({
+                userID: results[0].id,
+                token: token,
+                firstName: results[0].firstName,
+             lastName: results[0].lastName,
+                email: results[0].email
+              });
+            }
           }
         )
           .catch(
