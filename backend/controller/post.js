@@ -17,7 +17,7 @@ const title = req.body.title;
   var image = "";
 var url = req.protocol + "://" + req.get("host");
 if (req.file) {
-  image = url = "/image/"+ req.file.filename;
+  image = url + "/images/"+ req.file.filename;
 }
   //console.log(userID,message,image);
   post.createPost(userID, title, message, image)
