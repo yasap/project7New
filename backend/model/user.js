@@ -35,13 +35,14 @@ exports.removeUser = function (userID){
   return new Promise((resolve,reject)=>{
     con.query("DELETE FROM users WHERE id=?;",
     [userID],
-    (error, results) => {
-      if (error) {
-        reject (error)
-      }
-      resolve(results)
+      (error, results) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve(results)
     
-    }
+        }
+      }
     )
   })
 }

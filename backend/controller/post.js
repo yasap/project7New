@@ -8,8 +8,6 @@ var fs = require('fs');
 
 exports.addPost = (req, res, next) => {
 
-  //get the data from frontend
-  // var data = JSON.parse(req.body);
 
 const userID = req.body.userID;
 const message = req.body.message;
@@ -48,21 +46,6 @@ exports.getAllPost = (req, res, next) => {
       else res.status(200).json(results);
     })
 };
-// exports.getOnePost = (req, res, next) => {
-//   post.findOne({
-//     _id: req.params.id
-//     .then(
-//     (post) => {
-//       (error, results) => {
-//         if (error) {
-//           res.status(200).json({
-//             message: "oops... Something went wrong"
-//           });
-        
-//         }
-//         else res.status(200).json(results);
-//       }
-//     });
 
 // // post-read 
 exports.getPost = (req, res, next) => {
@@ -99,3 +82,8 @@ exports.getReadPost = (req, res, next) => {
     })
 
 };
+exports.readPost = (req, res, next) => {
+  const userID = req.body.userid;
+  const postID = req.body.postid;
+  con.query('DELETE FROM readPost WHERE id=?;',[userID],)
+}

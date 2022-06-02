@@ -66,7 +66,7 @@ exports.login = (req, res, fields) => {
     'SELECT * FROM users WHERE email = ?', [userEmail],
     (err, results) => {
       if (err) {
-        res.status(500).json({ 'message': "Ooops" })
+        res.status(500).json({ error: "Ooops" })
       }
       if (results.length > 0) {
         console.log(" check3" , results);
@@ -103,7 +103,7 @@ exports.login = (req, res, fields) => {
           );
       }
       else{
-        res.status(500).json({'message' : "User Email not found"})
+        res.status(500).json({'error' : "User Email not found"})
       }
     })
 }
@@ -195,14 +195,6 @@ exports.updateUser=(req,res,next)=>{
 }
 exports.deleteUser=(req,res,next)=>{
   const userID =req.params.id
-  con.query(
-    "SELECT userEmail FROM userDB WHERE userID = '" + userID + "'",
-    (err, results) => {
-      if (err) {
-        console.log(err);
-      }if (results.length === 0) {
-        res.status(404).json({ 'message': "User not found" })
-      }else{
         userFunc.removeUser(userID)
         .then(
           () => {
@@ -212,11 +204,9 @@ exports.deleteUser=(req,res,next)=>{
           }
         ).catch(
           (error) => {
-            res.status(500).json({
-              error: error
+            console.log(error);
+            res.status(200).json({
+              error: 'can not delete User'
             });
           });
       }
-    }
-  )
-}
