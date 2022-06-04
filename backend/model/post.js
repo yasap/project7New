@@ -16,6 +16,22 @@ exports.createPost = function (userID,title,message,image){
         })
     });
 }
+exports.createReadPost = function (userID,postID){
+      return new Promise((resolve, reject) => {
+    var values = [[userID, postID]];
+    con.query(
+      "INSERT INTO readers(userid, postid) VALUES ?", [values],
+      (error, results) => {
+        if (error) {
+          reject("ooops , something went wrong");
+          console.error("post.insertReadPost(): ", error);
+        }
+        resolve(results)
+        console.log(results);
+      })
+  })
+}
+
 
 exports.getSinglePost= function (postID){
     return new Promise((resolve,reject)=>{

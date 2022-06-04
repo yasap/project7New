@@ -70,7 +70,7 @@ exports.getPost = (req, res, next) => {
  
 exports.getReadPost = (req, res, next) => {
   const userID = req.params.id
-  con.query('SELECT * FROM readPost WHERE userID =' + userID,
+  con.query('SELECT * FROM readers WHERE userID =' + userID,
 
     (error, results) => {
       if (error) {
@@ -82,8 +82,25 @@ exports.getReadPost = (req, res, next) => {
     })
 
 };
-exports.readPost = (req, res, next) => {
-  const userID = req.body.userid;
-  const postID = req.body.postid;
-  con.query('DELETE FROM readPost WHERE id=?;',[userID],)
-}
+
+
+exports.insertReadPost = (req, res, next) => {
+  const userID = req.body.userID;
+  const postID = req.body.postID;
+  console.log(req.body);
+  post.createReadPost(userID, postID)
+    .then(
+      () => {
+        res.status(201).json({
+          message: 'Post read successfuly'
+        });
+      }
+    ).catch(
+      (error) => {
+        res.status(500).json({
+          message: "error occurred"
+        });
+      }
+    );
+
+};
