@@ -10,7 +10,6 @@ module.exports = (req, res, next) => {
         res.status(401), json({ message: " thereis a problem with your token" });
       }
       else {
-        let userid = decodedToken.userID;
         next();
       }
     });
